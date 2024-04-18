@@ -1,41 +1,41 @@
 #!/bin/bash
 
-# Function to install iperf3
+# 函数：安装iperf3
 install_iperf3() {
-    # Check if iperf3 is installed
+    # 检查是否已安装iperf3
     if ! command -v iperf3 &> /dev/null
     then
-        # Install iperf3 if not installed
-        echo "Installing iperf3..."
+        # 如果未安装iperf3，则安装
+        echo "正在安装iperf3..."
         apt-get update
         apt-get install -y iperf3
     else
-        echo "iperf3 is already installed."
+        echo "iperf3已经安装。"
     fi
 }
 
-# Function to start iperf3 server
+# 函数：启动iperf3服务器
 start_iperf3_server() {
-    echo "Starting iperf3 server..."
+    echo "正在启动iperf3服务器..."
     iperf3 -s &
 }
 
-# Function to run iperf3 test
+# 函数：运行iperf3测试
 run_iperf3_test() {
-    read -p "Enter server IP address: " server_ip
+    read -p "请输入服务器IP地址: " server_ip
     iperf3 -c $server_ip -t 60
 }
 
-# Main menu
+# 主菜单
 while true
 do
     echo "=============================="
-    echo "1: Install iperf3"
-    echo "2: Start iperf3 server"
-    echo "3: Run iperf3 test"
-    echo "4: Exit"
+    echo "1: 安装iperf3"
+    echo "2: 启动iperf3服务器"
+    echo "3: 运行iperf3测试"
+    echo "4: 退出"
     echo "=============================="
-    read -p "Enter your choice: " choice
+    read -p "请输入您的选择: " choice
     case $choice in
         1)
             install_iperf3
@@ -47,11 +47,11 @@ do
             run_iperf3_test
             ;;
         4)
-            echo "Exiting..."
+            echo "正在退出..."
             exit 0
             ;;
         *)
-            echo "Invalid choice. Please enter a valid option."
+            echo "无效的选择，请输入有效选项。"
             ;;
     esac
 done
