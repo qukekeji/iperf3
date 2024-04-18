@@ -23,6 +23,7 @@ start_iperf3_server() {
 # 函数：运行iperf3测试
 run_iperf3_test() {
     read -p "请输入服务器IP地址: " server_ip
+    echo "正在运行iperf3测试..."
     iperf3 -c $server_ip -t 60
 }
 
