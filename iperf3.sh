@@ -16,8 +16,21 @@ install_iperf3() {
 
 # 函数：启动iperf3服务器
 start_iperf3_server() {
-    echo "正在启动iperf3服务器..."
-    iperf3 -s
+    # 检查iperf3服务器是否已在运行
+    if pgrep iperf3 > /dev/null
+    then
+        echo "iperf3服务器已经在运行，无需重复运行。"
+        echo "是否退出iperf3服务器？(Y/N)"
+        read -r choice
+        if [[ $choice == "Y" || $choice == "y" ]]
+        then
+            pkill iperf3
+            echo "iperf3服务器已退出。"
+        fi
+    else
+        echo "正在启动iperf3服务器..."
+        iperf3 -s
+    fi
 }
 
 # 函数：运行iperf3测试
@@ -32,7 +45,7 @@ while true
 do
     echo "=============================="
     echo "1: 安装iperf3"
-    echo "2: 启动iperf3服务器"
+    echo "2: 启动/退出iperf3服务器"
     echo "3: 运行iperf3测试"
     echo "4: 退出"
     echo "=============================="
