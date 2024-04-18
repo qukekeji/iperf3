@@ -14,19 +14,33 @@ install_iperf3() {
     fi
 }
 
+# 函数：检查iperf3服务器状态
+check_iperf3_status() {
+    # 检查iperf3服务器是否已在运行
+    if pgrep iperf3 > /dev/null
+    then
+        echo "iperf3服务器已经在运行。"
+        echo "请选择操作："
+        echo "1: 关闭iperf3服务器"
+    else
+        echo "iperf3服务器未运行。"
+    fi
+}
+
+# 函数：关闭iperf3服务器
+stop_iperf3_server() {
+    pkill iperf3
+    echo "iperf3服务器已关闭。"
+}
+
 # 函数：启动iperf3服务器
 start_iperf3_server() {
     # 检查iperf3服务器是否已在运行
     if pgrep iperf3 > /dev/null
     then
-        echo "iperf3服务器已经在运行，无需重复运行。"
-        echo "是否退出iperf3服务器？(Y/N)"
-        read -r choice
-        if [[ $choice == "Y" || $choice == "y" ]]
-        then
-            pkill iperf3
-            echo "iperf3服务器已退出。"
-        fi
+        echo "iperf3服务器已经在运行。"
+        echo "请选择操作："
+        echo "1: 关闭iperf3服务器"
     else
         echo "正在启动iperf3服务器..."
         iperf3 -s
@@ -45,7 +59,7 @@ while true
 do
     echo "=============================="
     echo "1: 安装iperf3"
-    echo "2: 启动/退出iperf3服务器"
+    echo "2: 启动iperf3服务器"
     echo "3: 运行iperf3测试"
     echo "4: 退出"
     echo "=============================="
@@ -68,4 +82,14 @@ do
             echo "无效的选择，请输入有效选项。"
             ;;
     esac
+    # 如果选择了启动iperf3服务器，显示关闭选项
+    if [[ $choice == 2 ]]
+    then
+        check_iperf3_status
+    fi
+    # 如果选择了关闭iperf3服务器，执行关闭操作
+    if [[ $choice == 1 ]]
+    then
+        stop_iperf3_server
+    fi
 done
