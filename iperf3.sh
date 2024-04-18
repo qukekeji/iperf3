@@ -17,7 +17,7 @@ install_iperf3() {
 # 函数：启动iperf3服务器
 start_iperf3_server() {
     echo "正在启动iperf3服务器..."
-    iperf3 -s &
+    iperf3 -s
 }
 
 # 函数：运行iperf3测试
